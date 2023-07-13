@@ -7,7 +7,7 @@ jobs:
 # Build and push the docker image
   push_to_registry:
     name: Push Docker image to registry
-    runs-on: knbn-ui-arm64
+    runs-on: ARM64
     permissions:
       packages: write
       contents: read
@@ -47,7 +47,7 @@ jobs:
   # Deploy to kubernetes        
   deploy:
     needs: push_to_registry
-    runs-on: knbn-ui-arm64
+    runs-on: ARM64
     steps:
       - uses: actions/checkout@v2
       - name: kubectl apply
