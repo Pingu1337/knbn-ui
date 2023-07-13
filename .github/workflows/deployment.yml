@@ -44,4 +44,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: kubectl apply
-        run: kubectl apply -f deploy/deployment.yml
+        run: kubernetes-rollout
