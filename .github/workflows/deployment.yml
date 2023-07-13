@@ -35,7 +35,6 @@ jobs:
           context: .
           push: true
           tags: latest
-          labels: ${{ steps.meta.outputs.labels }}
           
   # Deploy to kubernetes        
   deploy:
