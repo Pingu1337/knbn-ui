@@ -34,7 +34,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: latest
+          tags: |
+            rpi2.null.care/knbn-ui:latest
           
   # Deploy to kubernetes        
   deploy:
