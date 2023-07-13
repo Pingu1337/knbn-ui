@@ -42,10 +42,6 @@ jobs:
     needs: push_to_registry
     runs-on: ARM64
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: kubectl apply
-        uses: Consensys/kubernetes-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-        with:
-          args: apply -f deploy/deployment.yml
+        run: kubectl apply -f deploy/deployment.yml
