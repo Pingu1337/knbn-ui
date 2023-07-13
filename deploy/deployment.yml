@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: knbn-ui
-          image: rpi2.null.care/todo-client:latest
+          image: rpi2.null.care/knbn-ui:latest
           imagePullPolicy: Always 
           command: ["node", "--experimental-modules", "index.js"]
           volumeMounts:
