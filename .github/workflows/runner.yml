@@ -4,11 +4,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  job1:
-    name: Check Runner
-    runs-on: [self-hosted, ubuntu-latest]
-    timeout-minutes: 1
+  deploy:
+    runs-on: ubuntu-latest
     steps:
-      - name: Echo out the input variables
-        run: |
-          echo "${{ runner.name }}"
+      - uses: actions/checkout@v2
+      
+      - name: Replace tokens
+      - uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["**/runner.yml"]'
+        env:
+          REPO_URL: https://github.com/${{ github.repository }}
+          RUNNER_NAME: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger deploy
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply deploy/runner.yml
