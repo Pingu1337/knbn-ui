@@ -1,22 +1,27 @@
-name: Check Self-hosted Runners
+name: Check self-hosted runner
 
 on:
   workflow_dispatch:
 
 jobs:
-  check-runners:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: List Runners
-        timeout-minutes: 1
-        id: runners
-        run: |
-          runners=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          "https://api.github.com/repos/${{ github.repository }}/actions/runners")
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["**/runner.yml"]'
+        env:
+          REPO_URL: https://github.com/${{ github.repository }}
+          RUNNER_NAME: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.RUNNER_ACCESS_TOKEN }}
 
-          echo "::set-output name=runners::${runners}"
-
-      - name: Display Runners
-        run: echo "${{ steps.runners.outputs.runners }}"
+      - name: Trigger deploy
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f deploy/runner.yml

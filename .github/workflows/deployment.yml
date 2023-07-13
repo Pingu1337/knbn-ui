@@ -1,13 +1,38 @@
 name: CI
 
 on:
-  - push
+  push:
+    branches: [ "main" ]
 
 jobs:
-# Build and push the docker image
+  # Start the self-hosted runner
+  start-runner:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["**/runner.yml"]'
+        env:
+          REPO_URL: https://github.com/${{ github.repository }}
+          RUNNER_NAME: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.RUNNER_ACCESS_TOKEN }}
+
+      - name: Trigger deploy
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f deploy/runner.yml
+  
+  # Build and push the docker image
   push_to_registry:
-    name: Push Docker image to registry
-    runs-on: ARM64
+    needs: start-runner
+    name: Build and push image
+    runs-on: self-hosted
     permissions:
       packages: write
       contents: read
@@ -40,8 +65,20 @@ jobs:
   # Deploy to kubernetes        
   deploy:
     needs: push_to_registry
-    runs-on: ARM64
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
       - name: kubectl apply
         run: kubernetes-rollout
+
+  # Stop the self-hosted runner
+  stop-runner:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean up
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: delete deployment/github-runner-${{ github.repository }}
