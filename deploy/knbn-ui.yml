@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: knbn-ui
+  labels:
+    app: knbn-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: knbn-ui
+  template:
+    metadata:
+      labels:
+        app: knbn-ui
+    spec:
+      containers:
+        - name: knbn-ui
+          image: rpi2.null.care/todo-client:latest
+          imagePullPolicy: Always 
+          command: ["node", "--experimental-modules", "index.js"]
+          volumeMounts:
+            - name: app-volume
+              mountPath: /usr/app
+            - name: node-modules
+              mountPath: /usr/app/node_modules
+          ports:
+            - containerPort: 3000
+          env:
+            - name: VITE_PUBLIC_BASE_PATH
+              value: http://knbn-api:8000
+      imagePullSecrets:
+        - name: rpi2          
+      volumes:
+        - name: app-volume
+          emptyDir: {}
+        - name: node-modules
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: knbn-ui
+spec:
+  type: NodePort
+  selector:
+    app: knbn-ui
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: knbn.zip
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - knbn.zip
+    - www.knbn.zip
+    secretName: knbn.zip
+  rules:
+  - host: knbn.zip
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: knbn-ui
+            port:
+              number: 3000
+  - host: www.knbn.zip
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: knbn-ui
+            port:
+              number: 3000
