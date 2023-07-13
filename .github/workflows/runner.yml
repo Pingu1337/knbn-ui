@@ -7,7 +7,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out the repo
+        uses: actions/checkout@v3
       
       - name: Replace tokens
       - uses: cschleiden/replace-tokens@v1
