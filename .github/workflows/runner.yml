@@ -17,7 +17,7 @@ jobs:
         env:
           REPO_URL: https://github.com/${{ github.repository }}
           RUNNER_NAME: ${{ github.repository }}
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.RUNNER_ACCESS_TOKEN }}
 
       - name: Trigger deploy
         uses: Consensys/kubernetes-action@master
