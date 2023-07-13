@@ -41,8 +41,8 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: |
-            latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           
   # Deploy to kubernetes        
   deploy:
