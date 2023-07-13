@@ -18,7 +18,7 @@ jobs:
           files: '["**/runner.yml"]'
         env:
           REPO_URL: https://github.com/${{ github.repository }}
-          RUNNER_NAME: ${{ github.repository }}
+          RUNNER_NAME: ${{ github.run_id }}
           ACCESS_TOKEN: ${{ secrets.RUNNER_ACCESS_TOKEN }}
 
       - name: Trigger deploy
@@ -81,4 +81,4 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: delete deployment/github-runner-${{ github.repository }}
+          args: delete deployment/github-runner-${{ github.run_id }}
