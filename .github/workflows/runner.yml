@@ -9,6 +9,7 @@ jobs:
 
     steps:
       - name: List Runners
+        timeout-minutes: 1
         id: runners
         run: |
           runners=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
