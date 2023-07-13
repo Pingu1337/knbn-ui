@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-runner-knbn-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: github-runner-knbn-ui
+  template:
+    metadata:
+      labels:
+        app: github-runner-knbn-ui
+    spec:
+      serviceAccountName: deployment-manager
+      containers:
+        - name: github-runner-knbn-ui
+          image: mioherman/github-runner:arm64
+          volumeMounts:
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
+            - name: kubeconfig
+              mountPath: /root/.kube
+              subPath: config
+          env:
+            - name: REPO_URL
+              value: #{REPO_URL}#
+            - name: RUNNER_NAME
+              value: #{RUNNER_NAME}#-arm64
+            - name: ACCESS_TOKEN
+              value: #{ACCESS_TOKEN}#
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: kubeconfig
+          configMap:
+            name: kubeconfig-cm
