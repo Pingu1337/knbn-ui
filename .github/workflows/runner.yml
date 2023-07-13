@@ -4,23 +4,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-runners:
+  job1:
+    name: Check Runner
+    runs-on: [self-hosted, ubuntu-latest]
     timeout-minutes: 1
-    runs-on: self-hosted
     steps:
-      - name: Exists
-        run: echo "self-hosted runner exists"
-
-  deploy-runner:
-        if: failure()
-        needs: check-runners
-        runs-on: ubuntu-latest
-        permissions:
-          packages: write
-          contents: read
-        steps:
-          - name: Check out the repo
-            uses: actions/checkout@v3
-          
-          - name: Deploy self-hosted runner 
-            run: echo "deploying self-hosted runner"
+      - name: Echo out the input variables
+        run: |
+          echo "${{ runner.name }}"
