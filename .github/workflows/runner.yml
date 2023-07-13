@@ -5,8 +5,8 @@ on:
 
 jobs:
   check-runners:
+    timeout-minutes: 1
     runs-on: self-hosted
-
     steps:
       - name: Exists
         run: echo "self-hosted runner exists"
