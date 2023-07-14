@@ -19,7 +19,7 @@ jobs:
         env:
           REPO_URL: https://github.com/${{ github.repository }}
           RUNNER_NAME: ${{ github.repository }}
-          RUN_ID: ${{ github.run_id }}
+          DEPLOYMENT: ${{ github.repository }}
           ACCESS_TOKEN: ${{ secrets.RUNNER_ACCESS_TOKEN }}
 
       - name: Trigger deploy
