@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: #{DEPLOYMENT}#
+  name: gh-runner-#{DEPLOYMENT}#
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: #{DEPLOYMENT}#
+      app: gh-runner-#{DEPLOYMENT}#
   template:
     metadata:
       labels:
-        app: #{DEPLOYMENT}#
+        app: gh-runner-#{DEPLOYMENT}#
     spec:
       serviceAccountName: deployment-manager
       containers:
-        - name: #{DEPLOYMENT}#
+        - name: gh-runner-#{DEPLOYMENT}#
           image: mioherman/github-runner:arm64
           volumeMounts:
             - name: docker-sock
