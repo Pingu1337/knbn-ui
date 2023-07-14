@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: #{RUN_ID}#
+  name: #{RUNNER_NAME}#
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: #{RUN_ID}#
+      app: #{RUNNER_NAME}#
   template:
     metadata:
       labels:
-        app: #{RUN_ID}#
+        app: #{RUNNER_NAME}#
     spec:
       serviceAccountName: deployment-manager
       containers:
-        - name: #{RUN_ID}#
+        - name: #{RUNNER_NAME}#
           image: mioherman/github-runner:arm64
           volumeMounts:
             - name: docker-sock
