@@ -6,8 +6,12 @@ on:
 
 jobs:
   # Start the self-hosted runner
-  start-runner:
+  start_runner:
+    name: Start self-hodted runner
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -31,8 +35,8 @@ jobs:
   
   # Build and push the docker image
   push_to_registry:
-    needs: start-runner
     name: Build and push image
+    needs: start_runner
     runs-on: self-hosted
     permissions:
       packages: write
@@ -62,30 +66,46 @@ jobs:
           push: true
           tags: |
             rpi2.null.care/knbn-ui:latest
-
-      # Deploy to kubernetes        
-#      - name: kubectl apply
-#        run: kubernetes-rollout
-
+            
+  # Deploy to kubernetes           
+  deploy:
+    name: Deploy to kubernetes
+    needs: push_to_registry
+    runs-on: self-hosted
+    permissions:
+      packages: write
+      contents: read
+    steps:
+    
+      - name: Check out the repo
+        uses: actions/checkout@v3
+            
       - name: kubectl apply
-        uses: Consensys/kubernetes-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-        with:
-          args: apply -f deploy/deployment.yml
+        run: kubernetes-rollout
+       
+#      - name: kubectl apply
+#        uses: Consensys/kubernetes-action@master
+#        env:
+#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+#        with:
+#          args: apply -f deploy/deployment.yml
       
-      - name: kubectl rollout
-        uses: Consensys/kubernetes-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-        with:
-          args: rollout restart deployment/knbn-ui
-
-  # Stop the self-hosted runner
-  stop-runner:
+#      - name: kubectl rollout
+#        uses: Consensys/kubernetes-action@master
+#        env:
+#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+#        with:
+#          args: rollout restart deployment/knbn-ui
+  
+  # Stop and clean up self-hosted runner
+  clean-up:
+    name: Clean up self-hosted runner
     if: always()
     needs: push_to_registry
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - name: Clean up
         uses: Consensys/kubernetes-action@master
