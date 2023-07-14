@@ -22,7 +22,7 @@ jobs:
           DEPLOYMENT: ${{ github.run_id }}
           ACCESS_TOKEN: ${{ secrets.RUNNER_ACCESS_TOKEN }}
 
-      - name: Trigger deploy
+      - name: Deploy runner
         uses: Consensys/kubernetes-action@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
@@ -62,13 +62,28 @@ jobs:
           push: true
           tags: |
             rpi2.null.care/knbn-ui:latest
-            
+
       # Deploy to kubernetes        
+#      - name: kubectl apply
+#        run: kubernetes-rollout
+
       - name: kubectl apply
-        run: kubernetes-rollout
-          
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply -f deploy/deployment.yml
+      
+      - name: kubectl rollout
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: rollout restart deployment/knbn-ui
+
   # Stop the self-hosted runner
   stop-runner:
+    if: always()
     needs: push_to_registry
     runs-on: ubuntu-latest
     steps:
