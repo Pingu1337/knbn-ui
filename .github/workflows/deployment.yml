@@ -76,32 +76,17 @@ jobs:
       packages: write
       contents: read
     steps:
-    
       - name: Check out the repo
         uses: actions/checkout@v3
             
       - name: kubectl apply
         run: kubernetes-rollout
-       
-#      - name: kubectl apply
-#        uses: Consensys/kubernetes-action@master
-#        env:
-#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-#        with:
-#          args: apply -f deploy/deployment.yml
-      
-#      - name: kubectl rollout
-#        uses: Consensys/kubernetes-action@master
-#        env:
-#          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-#        with:
-#          args: rollout restart deployment/knbn-ui
   
   # Stop and clean up self-hosted runner
   clean-up:
     name: Clean up self-hosted runner
     if: always()
-    needs: push_to_registry
+    needs: deploy
     runs-on: ubuntu-latest
     permissions:
       packages: write
