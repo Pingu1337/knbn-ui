@@ -62,21 +62,14 @@ jobs:
           push: true
           tags: |
             rpi2.null.care/knbn-ui:latest
-          
-  # Deploy to kubernetes        
-  deploy:
-    needs: push_to_registry
-    runs-on: self-hosted
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-
+            
+      # Deploy to kubernetes        
       - name: kubectl apply
         run: kubernetes-rollout
-
+          
   # Stop the self-hosted runner
   stop-runner:
-    needs: deploy
+    needs: push_to_registry
     runs-on: ubuntu-latest
     steps:
       - name: Clean up
