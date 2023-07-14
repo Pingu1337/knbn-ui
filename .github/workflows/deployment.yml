@@ -22,7 +22,7 @@ jobs:
           files: '["**/runner.yml"]'
         env:
           REPO_URL: https://github.com/${{ github.repository }}
-          RUNNER_NAME: ${{ github.repository }}
+          RUNNER_NAME: arm64
           DEPLOYMENT: ${{ github.run_id }}
           ACCESS_TOKEN: ${{ secrets.RUNNER_ACCESS_TOKEN }}
 
