@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      
+
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1
         with:
@@ -20,7 +20,7 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.RUNNER_ACCESS_TOKEN }}
 
       - name: Trigger deploy
-        uses: Consensys/kubernetes-action@master
+        uses: fno/kubernetes-action-no-aws@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:

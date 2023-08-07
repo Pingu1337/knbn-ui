@@ -27,7 +27,7 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.RUNNER_ACCESS_TOKEN }}
 
       - name: Deploy runner
-        uses: Consensys/kubernetes-action@master
+        uses: fno/kubernetes-action-no-aws@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
@@ -92,7 +92,7 @@ jobs:
       contents: read
     steps:
       - name: Clean up
-        uses: Consensys/kubernetes-action@master
+        uses: fno/kubernetes-action-no-aws@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
