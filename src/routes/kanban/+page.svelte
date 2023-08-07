@@ -1,9 +1,9 @@
 <script lang="ts">
   import "../../@types/todo.d.ts";
-  import Board from "../../components/board.svelte";
+  import Board from "../../components/Board.svelte";
   import { UseTodos } from "../../hooks/useTodos.js";
   import type { PageData } from "./$types";
-  import AddTodo from "../../components/modal.svelte";
+  import AddTodo from "../../components/Modal.svelte";
 
   export let data: PageData;
 

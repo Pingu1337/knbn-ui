@@ -2,6 +2,7 @@
   import "@skeletonlabs/skeleton/themes/theme-crimson.css";
   import "@skeletonlabs/skeleton/styles/skeleton.css";
   import "../app.postcss";
+  import { QRCodeImage } from "svelte-qrcode-image";
   import { LightSwitch, clipboard } from "@skeletonlabs/skeleton";
   import { browser } from "$app/environment";
 
@@ -32,7 +33,7 @@
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <small
             class="me-6 select-none cursor-pointer"
-            use:clipboard={userCode}
+            use:clipboard={userCode ? userCode : ""}
             on:click={() => {
               copied = true;
               setTimeout(() => {
