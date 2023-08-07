@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   # Start the self-hosted runner
@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      
+
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1
         with:
@@ -32,7 +32,7 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: apply -f deploy/runner.yml
-  
+
   # Build and push the docker image
   push_to_registry:
     name: Build and push image
@@ -48,7 +48,6 @@ jobs:
       - name: Log in to registry
         uses: docker/login-action@v2
         with:
-          registry: rpi2.null.care
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
@@ -57,17 +56,17 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            rpi2.null.care/knbn-ui
-      
+            mioherman/knbn-ui
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: |
-            rpi2.null.care/knbn-ui:latest
-            
-  # Deploy to kubernetes           
+            mioherman/knbn-ui:latest
+
+  # Deploy to kubernetes
   deploy:
     name: Deploy to kubernetes
     needs: push_to_registry
@@ -78,10 +77,10 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-            
+
       - name: kubectl apply
         run: kubernetes-rollout
-  
+
   # Stop and clean up self-hosted runner
   clean-up:
     name: Clean up self-hosted runner
