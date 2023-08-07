@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: knbn-ui
-          image: rpi2.null.care/knbn-ui:latest
-          imagePullPolicy: Always 
+          image: mioherman/knbn-ui:latest
+          imagePullPolicy: Always
           command: ["node", "--experimental-modules", "index.js"]
           volumeMounts:
             - name: app-volume
@@ -30,7 +30,7 @@ spec:
             - name: VITE_PUBLIC_BASE_PATH
               value: http://knbn-api:8000
       imagePullSecrets:
-        - name: rpi2          
+        - name: rpi2
       volumes:
         - name: app-volume
           emptyDir: {}
@@ -59,28 +59,28 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
-  - hosts:
-    - knbn.zip
-    - www.knbn.zip
-    secretName: knbn.zip
+    - hosts:
+        - knbn.zip
+        - www.knbn.zip
+      secretName: knbn.zip
   rules:
-  - host: knbn.zip
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: knbn-ui
-            port:
-              number: 3000
-  - host: www.knbn.zip
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: knbn-ui
-            port:
-              number: 3000
+    - host: knbn.zip
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: knbn-ui
+                port:
+                  number: 3000
+    - host: www.knbn.zip
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: knbn-ui
+                port:
+                  number: 3000
