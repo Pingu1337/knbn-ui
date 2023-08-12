@@ -647,6 +647,11 @@ find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+flowbite-svelte-icons@^0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/flowbite-svelte-icons/-/flowbite-svelte-icons-0.3.6.tgz#62ab2ece8ea9bb04e759da51a06b7ee0b6de0c2c"
+  integrity sha512-4YEq++cbD36KF+zGgLqfkmQgfWGMAP7tjDbesuieROx6UgbMBTtj7f4n49iO+g1cMLelGsCkyZiwelCXDbIJ2w==
+
 flowbite-svelte@^0.38.5:
   version "0.38.5"
   resolved "https://registry.yarnpkg.com/flowbite-svelte/-/flowbite-svelte-0.38.5.tgz#77b90a9d457117cfbc5e0c5a8bda0a44983bcad1"
