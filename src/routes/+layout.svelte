@@ -21,14 +21,14 @@
 
 {#if signedIn != null}
   <main>
-    <header class="flex justify-between items-center mt-5 me-5 lg:flex-row flex-col">
+    <header class="flex justify-between items-center mt-5 me-5 flex-row">
       <div class="flex items-center justify-center mx-4">
         <a href="/">
           <Icon name="check-circle-solid" size="lg" style="outline:none;" />
         </a>
       </div>
       <div
-        class="flex gap-4 lg:items-center items-start lg:w-auto w-full lg:ms-0 ms-8 lg:flex-row flex-row justify-evenly"
+        class="flex gap-4 lg:items-center items-start w-auto lg:ms-0 ms-8 lg:flex-row flex-row justify-evenly"
       >
         {#if signedIn}
           <button class="btn variant-soft me-14" on:click={signOut}>Sign out</button>
