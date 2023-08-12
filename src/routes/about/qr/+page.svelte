@@ -10,7 +10,9 @@
   }
 </script>
 
-<article class="flex flex-col justify-center items-center w-2/4 mx-auto">
+<article
+  class="flex flex-col justify-center items-center lg:w-2/4 w-3/4 mx-auto mt-5 pb-10"
+>
   <h1 class="h1 mb-4">QR-Code Sign In</h1>
 
   <section class="mt-6">
