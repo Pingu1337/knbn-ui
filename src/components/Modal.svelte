@@ -45,15 +45,13 @@
 </script>
 
 <button
-  class=" fixed lg:absolute left-10 bottom-6 lg:top-20 btn-icon btn-icon-lg variant-filled select-none"
+  class=" fixed lg:absolute left-10 lg:left-20 bottom-6 lg:bottom-20 btn-icon btn-icon-lg variant-filled select-none"
   on:click={() => (formModal = true)}>+</button
 >
 
 <Modal bind:open={formModal} size="xs" autoclose={false} class="w-full">
   <form class="flex flex-col space-y-6" on:submit={addTodo}>
-    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-      TODO:
-    </h3>
+    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">TODO:</h3>
     <Label class="space-y-2">
       <span>Title</span>
       <Input type="text" name="title" placeholder="buy milk" required />

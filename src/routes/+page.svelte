@@ -35,23 +35,26 @@
 </script>
 
 {#if !user}
-  <form on:submit={login}>
-    <div class="flex justify-center items-center flex-col mt-12 mx-auto">
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <span
-        class="btn !bg-transparent bg-none border-none outline-none cursor-pointer select-none w-1/4"
-        on:click={() => (open = !open)}>Login with user code</span
-      >
+  <h1 class="h1 mx-auto text-center">knbn.zip</h1>
+  <div class="w-full">
+    <form on:submit={login}>
+      <div class="flex justify-center items-center flex-col mt-12 mx-auto">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <span
+          class="btn !bg-transparent bg-none border-none outline-none cursor-pointer select-none w-1/4"
+          on:click={() => (open = !open)}>Login with user code 🔐</span
+        >
 
-      <div use:collapse={{ open }} class="mb-6 lg:w-1/4 w-4/5">
-        <Input
-          id="user-code-input"
-          bind:value={inputUser}
-          size="lg"
-          placeholder="User code"
-        />
+        <div use:collapse={{ open }} class="mb-6 lg:w-1/4 w-4/5">
+          <Input
+            id="user-code-input"
+            bind:value={inputUser}
+            size="lg"
+            placeholder="User code"
+          />
+        </div>
+        <Button class="btn btn-primary w-1/4" on:click={login}>Login</Button>
       </div>
-      <Button class="btn btn-primary w-1/4" on:click={login}>Login</Button>
-    </div>
-  </form>
+    </form>
+  </div>
 {/if}

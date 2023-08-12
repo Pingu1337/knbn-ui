@@ -2,7 +2,7 @@
   // @ts-nocheck
   import { flip } from "svelte/animate";
   import { dndzone } from "svelte-dnd-action";
-  import TodoCardContent from "./todo-card-content.svelte";
+  import TodoCardContent from "./TodoCardContent.svelte";
 
   export let user: string;
 
@@ -73,25 +73,21 @@
       </div>
     </div>
   {/each}
-  <div class="mt-5 pb-5 lg:hidden">
-    <small><i>Ez kanban</i></small>
-  </div>
 </section>
 
 <style>
   .board {
-    height: 90vh;
+    /* height: 90vh; */
     width: 100%;
-    padding: 0.5em;
     display: flex;
     justify-content: center;
+    gap: 1.5rem;
     flex-wrap: wrap;
   }
   .column {
     height: 100%;
     width: 350px;
     padding: 0.5em;
-    margin: 1em;
     float: left;
     overflow-y: hidden;
   }
@@ -113,7 +109,7 @@
   }
 
   .kanban-col {
-    height: 89vh;
+    height: 85vh;
     padding: 1rem;
     border-radius: 1rem;
   }
