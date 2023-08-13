@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { Button, CloseButton, Label, Select } from "flowbite-svelte";
+  import { CloseButton } from "flowbite-svelte";
   import "../styles/todo-card-content.css";
   export let todo: Todo;
   export let user: string;
 
   let selected: string = todo.status.toString();
-
-  console.log(selected);
 
   const updateTodo = async () => {
     await fetch(`/api/todo/?id=${todo.id}&status=${selected}`, {
@@ -16,11 +14,14 @@
   };
 
   const deleteTodo = async () => {
-    console.log(todo.id);
     const response = await fetch(`/api/todo/?id=${todo.id}&user=${user}`, {
       method: "DELETE",
     });
-    console.log(await response.json());
+
+    if (!response.ok) {
+      console.error("An error occurred while deleting the todo.");
+    }
+
     window.location.reload();
   };
 </script>

@@ -15,7 +15,6 @@
   let formModal = false;
 
   const addTodo = async (e: any) => {
-    console.log(e.target);
     e.preventDefault();
 
     const todo: TodoRequest = {
@@ -31,7 +30,11 @@
       },
       body: JSON.stringify(todo),
     });
-    console.log(await response.json());
+
+    if (!response.ok) {
+      console.error("Error adding todo");
+    }
+
     formModal = false;
     resetZoom();
     window.location.reload();
