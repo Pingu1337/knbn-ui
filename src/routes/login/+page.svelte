@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Modal, Label, Input, Textarea } from "flowbite-svelte";
+  import { Button, Modal } from "flowbite-svelte";
   import { writable } from "svelte/store";
 
   const urlParams = new URLSearchParams(window.location.search);

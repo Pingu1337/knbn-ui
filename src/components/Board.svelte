@@ -10,7 +10,9 @@
     const response = await fetch(`/api/todo/?id=${id}&status=${status}`, {
       method: "PUT",
     });
-    console.log(await response.json());
+    if (!response.ok) {
+      console.error("Error updating todo status");
+    }
   };
 
   export let columnItems: TodoList[];
@@ -31,7 +33,6 @@
     columnItems[colIdx].todos = e.detail.items;
 
     if (e.detail.info.trigger === "droppedIntoZone") {
-      console.log("new status: ", colIdx, e.detail.info.id);
       await updateTodo(colIdx, e.detail.info.id);
     }
 
@@ -77,7 +78,6 @@
 
 <style>
   .board {
-    /* height: 90vh; */
     width: 100%;
     display: flex;
     justify-content: center;
@@ -109,7 +109,7 @@
   }
 
   .kanban-col {
-    height: 85vh;
+    height: 80vh;
     padding: 1rem;
     border-radius: 1rem;
   }
