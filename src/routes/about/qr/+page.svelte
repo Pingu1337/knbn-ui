@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { writable, type Writable } from "svelte/store";
-  import QrCode from "../../../components/QRCode.svelte";
+  import QrCode from "$components/QRCode.svelte";
 
   let user: Writable<string | null> = writable(null);
 

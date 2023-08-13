@@ -78,7 +78,6 @@
 
 <style>
   .board {
-    /* height: 90vh; */
     width: 100%;
     display: flex;
     justify-content: center;
@@ -110,7 +109,7 @@
   }
 
   .kanban-col {
-    height: 85vh;
+    height: 80vh;
     padding: 1rem;
     border-radius: 1rem;
   }

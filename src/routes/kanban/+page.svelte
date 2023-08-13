@@ -1,20 +1,22 @@
 <script lang="ts">
-  import "../../@types/todo.d.ts";
-  import Board from "../../components/Board.svelte";
-  import { UseTodos } from "../../hooks/useTodos.js";
+  import "$types/todo.d.ts";
+  import Board from "$components/Board.svelte";
+  import { useTodos } from "$hooks/useTodos.js";
   import type { PageData } from "./$types";
-  import AddTodo from "../../components/Modal.svelte";
-  import QrCode from "../../components/QRCode.svelte";
-
+  import AddTodo from "$components/Modal.svelte";
+  import QrCode from "$components/QRCode.svelte";
+  import BottomNav from "$components/BottomNav.svelte";
+  import { signedIn } from "$lib/stores";
   export let data: PageData;
 
-  let todoBoard: TodoList[] = UseTodos(data.todos);
+  let todoBoard: TodoList[] = useTodos(data.todos);
+
   let user: string = data.user ?? "";
 </script>
 
-<div class="flex justify-evenly h-auto mt-8 main-flex">
+<div class="flex justify-evenly h-auto mt-6 main-flex">
   <section class="flex-col justify-center items-center side-section side-section-left" />
-  <div class="flex justify-between align-center flex-col">
+  <div class="flex justify-center align-center flex-col">
     <AddTodo {user} />
     <Board columnItems={todoBoard} {user} />
   </div>
@@ -27,6 +29,9 @@
     <QrCode userCode={user} />
   </div>
 </div>
+{#if $signedIn}
+  <BottomNav {user} />
+{/if}
 
 <style>
   @media screen and (max-width: 1700px) {

@@ -30,7 +30,9 @@
   <b>{todo.title}</b>
   <CloseButton on:click={deleteTodo} class="todo-close-btn" />
 </header>
-<section class="p-4">{todo.content}</section>
+<section class="p-4">
+  {@html todo.content}
+</section>
 
 <select
   class="select variant-filled border-none lg:hidden"

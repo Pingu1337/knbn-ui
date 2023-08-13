@@ -1,13 +1,11 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { Button } from "flowbite-svelte";
-  import { Label, Input } from "flowbite-svelte";
+  import { Input } from "flowbite-svelte";
   import collapse from "svelte-collapse";
 
   let open = false;
-
   let storedUser: string | null;
-
   let inputUser: string | null = null;
 
   if (browser) {
