@@ -8,22 +8,27 @@
     Avatar,
     Button,
     NavLi,
-    Dropdown,
-    DropdownItem,
-    DropdownDivider,
-    DropdownHeader,
   } from "flowbite-svelte";
   import { Icon } from "flowbite-svelte-icons";
   import AvatarDropdown from "./AvatarDropdown.svelte";
   import NavLink from "./NavLink.svelte";
   import { kanbanRoute } from "$stores";
   import BuyMeACoffeeIcon from "./BuyMeACoffeeIcon.svelte";
+  import NewsBanner from "./NewsBanner.svelte";
 
   export let signedIn: boolean;
   export let userCode: string | null;
 
   $: user = userCode;
 </script>
+
+<NewsBanner bannerId="01.10.2023" href="/about/storage">
+  <span slot="text">
+    To increase the security of our data we have changed the way todos are stored. Some of
+    your todos may have been lost in the process. We are sorry for the inconvenience.
+  </span>
+  <span slot="readMore"> Read more </span>
+</NewsBanner>
 
 <Navbar
   let:hidden

@@ -29,3 +29,17 @@ function getVisited(): boolean {
   }
   return false;
 }
+
+export function setNewsBanner(version: string) {
+  if (browser) {
+    window.localStorage.setItem(`news-banner-${version}`, "true");
+  }
+}
+
+export function getNewsBanner(version: string): boolean {
+  if (browser) {
+    const visited = window.localStorage.getItem(`news-banner-${version}`);
+    return visited !== null;
+  }
+  return false;
+}
