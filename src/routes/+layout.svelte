@@ -4,7 +4,6 @@
   import "../app.postcss";
   import { browser } from "$app/environment";
   import Navbar from "$components/Navbar.svelte";
-  import BottomNav from "$components/BottomNav.svelte";
 
   let signedIn: boolean | null = null;
   let userCode: string | null = null;
